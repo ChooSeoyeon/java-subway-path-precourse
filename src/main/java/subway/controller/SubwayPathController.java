@@ -48,9 +48,13 @@ public class SubwayPathController {
                 if (subFunction.equals("1") || subFunction.equals("2")) {
                     String startStation = repeatUntilSuccessWithReturn(inputView::readStartStation);
                     String endStation = repeatUntilSuccessWithReturn(inputView::readEndStation);
-                    ShortestPath shortestPath = pathFinder.findShortestPathBy(subFunction, startStation, endStation);
-                    outputView.printShortestPath(shortestPath);
-                    continue;
+                    try {
+                        ShortestPath shortestPath = pathFinder.findShortestPathBy(subFunction, startStation,
+                                endStation);
+                        outputView.printShortestPath(shortestPath);
+                    } catch (IllegalArgumentException e) {
+                        outputView.printErrorMessage(e.getMessage());
+                    }
                 }
             }
         }

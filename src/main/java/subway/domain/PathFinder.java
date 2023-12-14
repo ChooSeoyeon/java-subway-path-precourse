@@ -2,8 +2,10 @@ package subway.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
+import subway.domain.dto.ShortestPath;
 
 public class PathFinder {
     public WeightedMultigraph<String, DefaultWeightedEdge> unionPathToGraph(List<Path> paths, String choice) {
@@ -29,5 +31,41 @@ public class PathFinder {
             }
         }
         return graph;
+    }
+
+    public ShortestPath findShortestPath(WeightedMultigraph<String, DefaultWeightedEdge> shortGraph,
+                                         WeightedMultigraph<String, DefaultWeightedEdge> nonShortGraph,
+                                         String choice,
+                                         String source,
+                                         String target) {
+        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(shortGraph);
+
+        List<String> shortestPath = findShortestPath(dijkstraShortestPath, source, target);
+        int shortTotalWeight = findShortTotalWeight(dijkstraShortestPath, source, target);
+        int nonShortTotalWeight = findNonShortTotalWeight(nonShortGraph, shortestPath);
+
+        if (choice.equals("1")) { // TODO: dto로 넘기기 (거리, 시간)
+            return new ShortestPath(shortestPath, shortTotalWeight, nonShortTotalWeight);
+        }
+        return new ShortestPath(shortestPath, nonShortTotalWeight, shortTotalWeight);
+    }
+
+    private List<String> findShortestPath(DijkstraShortestPath dijkstraShortestPath, String source, String target) {
+        return dijkstraShortestPath.getPath(source, target).getVertexList();
+    }
+
+    private int findShortTotalWeight(DijkstraShortestPath dijkstraShortestPath, String source, String target) {
+        return (int) dijkstraShortestPath.getPath(source, target).getWeight();
+    }
+
+    private int findNonShortTotalWeight(WeightedMultigraph<String, DefaultWeightedEdge> nonShortGraph,
+                                        List<String> shortestPath) {
+        double nonShortTotalWeight = 0;
+        for (int i = 0; i < shortestPath.size() - 1; i++) {
+            nonShortTotalWeight += nonShortGraph.getEdgeWeight(
+                    nonShortGraph.getEdge(
+                            shortestPath.get(i), shortestPath.get(i + 1)));
+        }
+        return (int) nonShortTotalWeight;
     }
 }

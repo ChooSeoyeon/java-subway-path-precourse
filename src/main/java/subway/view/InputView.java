@@ -24,7 +24,7 @@ public class InputView {
         if (inputFunction.equals("Q")) {
             return;
         }
-        throw new IllegalArgumentException("지원하지 않는 기능입니다.\n");
+        throw new IllegalArgumentException("지원하지 않는 기능입니다.");
     }
 
     public String readPathFunction() {
@@ -44,7 +44,7 @@ public class InputView {
         if (inputFunction.equals("B")) {
             return;
         }
-        throw new IllegalArgumentException("지원하지 않는 기능입니다.\n");
+        throw new IllegalArgumentException("지원하지 않는 기능입니다.");
     }
 
     public String readStartStation() {
@@ -63,7 +63,7 @@ public class InputView {
 
     private void validateStation(String inputStation) { // TODO
         if (!StationRepository.existsStationByName(inputStation)) {
-            throw new IllegalArgumentException("존재하지 않는 역입니다.\n");
+            throw new IllegalArgumentException("존재하지 않는 역입니다.");
         }
     }
 }

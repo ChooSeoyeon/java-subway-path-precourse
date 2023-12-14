@@ -56,7 +56,7 @@ public class PathFinder {
 
     private void validateSourceAndTargetDifferent(String source, String target) {
         if (source.equals(target)) {
-            throw new IllegalArgumentException("출발역과 도착역이 같습니다.");
+            throw new IllegalArgumentException("출발역과 도착역이 동일합니다.");
         }
     }
 

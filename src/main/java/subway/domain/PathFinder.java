@@ -47,10 +47,17 @@ public class PathFinder {
 
     public ShortestPath findShortestPathBy(String choice, String source,
                                            String target) {
+        validateSourceAndTargetDifferent(source, target);
         if (choice.equals("1")) {
             return findShortestPath(distanceGraph, durationGraph, choice, source, target);
         }
         return findShortestPath(durationGraph, distanceGraph, choice, source, target);
+    }
+
+    private void validateSourceAndTargetDifferent(String source, String target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("출발역과 도착역이 같습니다.");
+        }
     }
 
     private ShortestPath findShortestPath(WeightedMultigraph<String, DefaultWeightedEdge> shortGraph,

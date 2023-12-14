@@ -13,6 +13,25 @@ public class SubwayPathController {
         this.outputView = outputView;
     }
 
+    public void run() {
+        prepare();
+        play();
+    }
+
+    private void prepare() {
+
+    }
+
+    private void play() {
+        while (true) {
+            outputView.printMainMenu();
+            String function = repeatUntilSuccessWithReturn(inputView::readFunction);
+            if (function.equals("Q")) {
+                return;
+            }
+        }
+    }
+
     private <T> T repeatUntilSuccessWithReturn(Supplier<T> supplier) {
         while (true) {
             try {

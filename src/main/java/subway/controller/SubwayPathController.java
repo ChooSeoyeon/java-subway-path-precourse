@@ -2,18 +2,22 @@ package subway.controller;
 
 import java.util.function.Supplier;
 import subway.domain.LineRepository;
+import subway.domain.PathFinder;
 import subway.domain.PathRepository;
 import subway.domain.StationRepository;
+import subway.domain.dto.ShortestPath;
 import subway.view.InputView;
 import subway.view.OutputView;
 
 public class SubwayPathController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final PathFinder pathFinder;
 
     public SubwayPathController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.pathFinder = new PathFinder();
     }
 
     public void run() {
@@ -25,6 +29,7 @@ public class SubwayPathController {
         LineRepository.addInitLine();
         StationRepository.addInitStation();
         PathRepository.addInitPath();
+        pathFinder.initPathFinder();
     }
 
     private void play() {
@@ -33,6 +38,23 @@ public class SubwayPathController {
             String function = repeatUntilSuccessWithReturn(inputView::readFunction);
             if (function.equals("Q")) {
                 return;
+            }
+            if (function.equals("1")) {
+                outputView.printPathFunction();
+                String subFunction = repeatUntilSuccessWithReturn(inputView::readPathFunction);
+                if (subFunction.equals("1")) {
+                    // TODO : 출발지, 도착지
+                    ShortestPath shortestPath = pathFinder.findShortestPathBy(subFunction, "강남역", "양재시민의숲역");
+                    System.out.println("shortestPath.getPath() = " + shortestPath.getPath());
+                    continue;
+                }
+                if (subFunction.equals("2")) {
+
+                    continue;
+                }
+                if (subFunction.equals("B")) {
+                    continue;
+                }
             }
         }
     }

@@ -8,6 +8,17 @@ import org.jgrapht.graph.WeightedMultigraph;
 import subway.domain.dto.ShortestPath;
 
 public class PathFinder {
+    private WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph(
+            DefaultWeightedEdge.class);
+    private WeightedMultigraph<String, DefaultWeightedEdge> durationGraph = new WeightedMultigraph(
+            DefaultWeightedEdge.class);
+
+    public void initPathFinder() {
+        List<Path> paths = PathRepository.findAll();
+        distanceGraph = unionPathToGraph(paths, "1");
+        durationGraph = unionPathToGraph(paths, "2");
+    }
+
     public WeightedMultigraph<String, DefaultWeightedEdge> unionPathToGraph(List<Path> paths, String choice) {
         WeightedMultigraph<String, DefaultWeightedEdge> graph = new WeightedMultigraph(DefaultWeightedEdge.class);
         for (Path path : paths) {
@@ -33,11 +44,16 @@ public class PathFinder {
         return graph;
     }
 
-    public ShortestPath findShortestPath(WeightedMultigraph<String, DefaultWeightedEdge> shortGraph,
-                                         WeightedMultigraph<String, DefaultWeightedEdge> nonShortGraph,
-                                         String choice,
-                                         String source,
-                                         String target) {
+    public ShortestPath findShortestPathBy(String choice, String source,
+                                           String target) {
+        return findShortestPath(distanceGraph, durationGraph, choice, source, target);
+    }
+
+    private ShortestPath findShortestPath(WeightedMultigraph<String, DefaultWeightedEdge> shortGraph,
+                                          WeightedMultigraph<String, DefaultWeightedEdge> nonShortGraph,
+                                          String choice,
+                                          String source,
+                                          String target) {
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(shortGraph);
 
         List<String> shortestPath = findShortestPath(dijkstraShortestPath, source, target);

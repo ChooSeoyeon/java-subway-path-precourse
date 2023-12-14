@@ -24,4 +24,23 @@ public class InputView {
         }
         throw new IllegalArgumentException("지원하지 않는 기능입니다.\n");
     }
+
+    public String readPathFunction() {
+        String inputFunction = scanner.nextLine();
+        validatePathFunction(inputFunction);
+        return inputFunction;
+    }
+
+    private void validatePathFunction(String inputFunction) {
+        if (inputFunction.equals("1")) {
+            return;
+        }
+        if (inputFunction.equals("2")) {
+            return;
+        }
+        if (inputFunction.equals("B")) {
+            return;
+        }
+        throw new IllegalArgumentException("지원하지 않는 기능입니다.\n");
+    }
 }

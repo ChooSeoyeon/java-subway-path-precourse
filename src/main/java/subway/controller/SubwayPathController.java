@@ -34,14 +34,12 @@ public class SubwayPathController {
 
     private void play() {
         while (true) {
-            outputView.printMainMenu();
-            String function = repeatUntilSuccessWithReturn(inputView::readFunction);
+            String function = repeatUntilSuccessWithReturn(this::readFunction);
             if (function.equals("Q")) {
                 return;
             }
             if (function.equals("1")) {
-                outputView.printPathFunction();
-                String subFunction = repeatUntilSuccessWithReturn(inputView::readPathFunction);
+                String subFunction = repeatUntilSuccessWithReturn(this::readPathFunction);
                 if (subFunction.equals("B")) {
                     continue;
                 }
@@ -58,6 +56,16 @@ public class SubwayPathController {
                 }
             }
         }
+    }
+
+    private String readFunction() {
+        outputView.printMainMenu();
+        return inputView.readFunction();
+    }
+
+    private String readPathFunction() {
+        outputView.printPathFunction();
+        return inputView.readPathFunction();
     }
 
     private <T> T repeatUntilSuccessWithReturn(Supplier<T> supplier) {

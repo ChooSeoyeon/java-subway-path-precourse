@@ -2,6 +2,7 @@ package subway.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
@@ -58,9 +59,12 @@ public class PathFinder {
                                           String source,
                                           String target) {
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(shortGraph);
-
-        List<String> shortestPath = findShortestPath(dijkstraShortestPath, source, target);
-        int shortTotalWeight = findShortTotalWeight(dijkstraShortestPath, source, target);
+        GraphPath graphShortestPath = dijkstraShortestPath.getPath(source, target);
+        if (graphShortestPath == null) {
+            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+        }
+        List<String> shortestPath = findShortestPath(graphShortestPath);
+        int shortTotalWeight = findShortTotalWeight(graphShortestPath);
         int nonShortTotalWeight = findNonShortTotalWeight(nonShortGraph, shortestPath);
 
         if (choice.equals("1")) { // TODO: dto로 넘기기 (거리, 시간)
@@ -69,12 +73,12 @@ public class PathFinder {
         return new ShortestPath(shortestPath, nonShortTotalWeight, shortTotalWeight);
     }
 
-    private List<String> findShortestPath(DijkstraShortestPath dijkstraShortestPath, String source, String target) {
-        return dijkstraShortestPath.getPath(source, target).getVertexList();
+    private List<String> findShortestPath(GraphPath shortestPath) {
+        return shortestPath.getVertexList();
     }
 
-    private int findShortTotalWeight(DijkstraShortestPath dijkstraShortestPath, String source, String target) {
-        return (int) dijkstraShortestPath.getPath(source, target).getWeight();
+    private int findShortTotalWeight(GraphPath shortestPath) {
+        return (int) shortestPath.getWeight();
     }
 
     private int findNonShortTotalWeight(WeightedMultigraph<String, DefaultWeightedEdge> nonShortGraph,

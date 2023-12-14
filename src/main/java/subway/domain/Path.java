@@ -30,4 +30,18 @@ public class Path {
     public List<Integer> getDurations() {
         return durations;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Path) {
+            Path path = (Path) obj;
+            return this.line.equals(path.line);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return line.hashCode();
+    }
 }

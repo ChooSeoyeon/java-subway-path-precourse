@@ -1,6 +1,9 @@
 package subway.controller;
 
 import java.util.function.Supplier;
+import subway.domain.LineRepository;
+import subway.domain.PathRepository;
+import subway.domain.StationRepository;
 import subway.view.InputView;
 import subway.view.OutputView;
 
@@ -19,7 +22,9 @@ public class SubwayPathController {
     }
 
     private void prepare() {
-
+        LineRepository.addInitLine();
+        StationRepository.addInitStation();
+        PathRepository.addInitPath();
     }
 
     private void play() {

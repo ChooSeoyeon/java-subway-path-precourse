@@ -42,14 +42,14 @@ public class SubwayPathController {
             if (function.equals("1")) {
                 outputView.printPathFunction();
                 String subFunction = repeatUntilSuccessWithReturn(inputView::readPathFunction);
+                if (subFunction.equals("B")) {
+                    continue;
+                }
                 if (subFunction.equals("1") || subFunction.equals("2")) {
                     String startStation = repeatUntilSuccessWithReturn(inputView::readStartStation);
                     String endStation = repeatUntilSuccessWithReturn(inputView::readEndStation);
                     ShortestPath shortestPath = pathFinder.findShortestPathBy(subFunction, startStation, endStation);
                     outputView.printShortestPath(shortestPath);
-                    continue;
-                }
-                if (subFunction.equals("B")) {
                     continue;
                 }
             }

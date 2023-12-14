@@ -24,4 +24,8 @@ public class Station {
     public int hashCode() {
         return name.hashCode();
     }
+
+    public boolean isSameName(String inputStation) {
+        return this.name.equals(inputStation);
+    }
 }

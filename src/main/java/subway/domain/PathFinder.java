@@ -46,7 +46,10 @@ public class PathFinder {
 
     public ShortestPath findShortestPathBy(String choice, String source,
                                            String target) {
-        return findShortestPath(distanceGraph, durationGraph, choice, source, target);
+        if (choice.equals("1")) {
+            return findShortestPath(distanceGraph, durationGraph, choice, source, target);
+        }
+        return findShortestPath(durationGraph, distanceGraph, choice, source, target);
     }
 
     private ShortestPath findShortestPath(WeightedMultigraph<String, DefaultWeightedEdge> shortGraph,

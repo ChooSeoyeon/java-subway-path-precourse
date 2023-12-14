@@ -33,4 +33,9 @@ public class StationRepository {
     public static void deleteAll() {
         stations.clear();
     }
+
+    public static boolean existsStationByName(String name) {
+        return stations.stream()
+                .anyMatch(station -> station.isSameName(name));
+    }
 }

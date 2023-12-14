@@ -1,6 +1,7 @@
 package subway.view;
 
 import java.util.Scanner;
+import subway.domain.StationRepository;
 
 public class InputView {
     private final Scanner scanner;
@@ -42,5 +43,25 @@ public class InputView {
             return;
         }
         throw new IllegalArgumentException("지원하지 않는 기능입니다.\n");
+    }
+
+    public String readStartStation() {
+        System.out.println("\n## 출발역을 입력하세요.");
+        String inputStation = scanner.nextLine();
+        validateStation(inputStation);
+        return inputStation;
+    }
+
+    public String readEndStation() {
+        System.out.println("\n## 도착역을 입력하세요.");
+        String inputStation = scanner.nextLine();
+        validateStation(inputStation);
+        return inputStation;
+    }
+
+    private void validateStation(String inputStation) { // TODO
+        if (!StationRepository.existsStationByName(inputStation)) {
+            throw new IllegalArgumentException("존재하지 않는 역입니다.\n");
+        }
     }
 }

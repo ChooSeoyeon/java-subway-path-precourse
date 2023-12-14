@@ -42,14 +42,11 @@ public class SubwayPathController {
             if (function.equals("1")) {
                 outputView.printPathFunction();
                 String subFunction = repeatUntilSuccessWithReturn(inputView::readPathFunction);
-                if (subFunction.equals("1")) {
-                    // TODO : 출발지, 도착지
-                    ShortestPath shortestPath = pathFinder.findShortestPathBy(subFunction, "강남역", "양재시민의숲역");
-                    System.out.println("shortestPath.getPath() = " + shortestPath.getPath());
-                    continue;
-                }
-                if (subFunction.equals("2")) {
-
+                if (subFunction.equals("1") || subFunction.equals("2")) {
+                    String startStation = repeatUntilSuccessWithReturn(inputView::readStartStation);
+                    String endStation = repeatUntilSuccessWithReturn(inputView::readEndStation);
+                    ShortestPath shortestPath = pathFinder.findShortestPathBy(subFunction, startStation, endStation);
+                    outputView.printShortestPath(shortestPath);
                     continue;
                 }
                 if (subFunction.equals("B")) {

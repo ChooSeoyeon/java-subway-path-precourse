@@ -67,7 +67,7 @@
 - [ ] 경로 기준을 출력한다
 - [ ] 경로 조회 결과를 출력한다
 
-## JavaSubwayController
+## SubwayPathController
 
 - [ ] 에러를 관리한다
 - [ ] 실행한다
